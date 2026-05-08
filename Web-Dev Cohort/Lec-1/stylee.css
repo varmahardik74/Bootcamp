@@ -1,0 +1,226 @@
+   /* ------------------------------
+       GLOBAL RESET & BASE STYLES
+       ------------------------------ */
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+   }
+
+   body {
+       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+       background-color: #ffffff;
+       color: #111111;
+   }
+
+   /* ------------------------------
+         MAIN PAGE LAYOUT
+         - Two-column split layout
+         - Left: dark hero
+         - Right: white form
+         ------------------------------ */
+   .page {
+       display: grid;
+       grid-template-columns: 1.1fr 1fr;
+       min-height: 100vh;
+   }
+
+   /* ==============================
+         LEFT SECTION (DARK HERO)
+         ============================== */
+   .left {
+       /* Soft-black / dark grey background */
+       background: linear-gradient(180deg,
+               #121212 0%,
+               #141414 60%,
+               #161616 100%);
+
+       color: #ffffff;
+
+       /* Internal spacing */
+       padding: 64px;
+
+       /* Space content vertically */
+       display: flex;
+       flex-direction: column;
+       justify-content: space-between;
+   }
+
+   /* Brand / logo text */
+   .brand {
+       font-size: 16px;
+       font-weight: 600;
+       opacity: 0.9;
+   }
+
+   /* Main heading */
+   .hero-title {
+       font-size: 48px;
+       font-weight: 600;
+       letter-spacing: -0.5px;
+       margin: 32px 0 24px;
+   }
+
+   /* Feature list container */
+   .features {
+       display: flex;
+       flex-direction: column;
+       gap: 14px;
+       max-width: 420px;
+   }
+
+   /* Single feature row */
+   .feature {
+       display: flex;
+       align-items: center;
+       gap: 12px;
+       font-size: 15px;
+       color: #cfcfcf;
+   }
+
+   /* Small icon dot (used instead of SVG for simplicity) */
+   .icon {
+       width: 16px;
+       height: 16px;
+       border-radius: 4px;
+       background-color: #ffffff;
+       opacity: 0.9;
+       flex-shrink: 0;
+   }
+
+   /* Trust text */
+   .trusted {
+       margin-top: 32px;
+       font-size: 13px;
+       color: #9a9a9a;
+   }
+
+   /* Logo row placeholder */
+   .logos {
+       display: flex;
+       gap: 24px;
+       margin-top: 20px;
+       opacity: 0.8;
+       font-size: 14px;
+   }
+
+   /* Rating section */
+   .rating {
+       margin-top: 32px;
+       font-size: 14px;
+       color: #cfcfcf;
+   }
+
+   /* Decorative wave at bottom */
+   .wave {
+       height: 120px;
+       background: radial-gradient(circle at 50% 0%,
+               #2a2a2a 0%,
+               #121212 70%);
+       margin: 0 -64px -64px;
+   }
+
+   /* ==============================
+         RIGHT SECTION (FORM)
+         ============================== */
+   .right {
+       background-color: #ffffff;
+       padding: 80px 72px;
+       display: flex;
+       justify-content: center;
+   }
+
+   .form-wrapper {
+       width: 100%;
+       max-width: 420px;
+   }
+
+   .form-title {
+       font-size: 32px;
+       font-weight: 600;
+       margin-bottom: 8px;
+   }
+
+   .form-subtitle {
+       font-size: 14px;
+       color: #666666;
+       margin-bottom: 32px;
+   }
+
+   /* Form group (label + input) */
+   .form-group {
+       display: flex;
+       flex-direction: column;
+       gap: 6px;
+       margin-bottom: 20px;
+   }
+
+   label {
+       font-size: 13px;
+       color: #333333;
+   }
+
+   input {
+       padding: 14px 16px;
+       font-size: 14px;
+       border-radius: 10px;
+       border: 1px solid #e0e0e0;
+       outline: none;
+   }
+
+   input:focus {
+       border-color: #111111;
+   }
+
+   /* Primary button */
+   .btn {
+       margin-top: 12px;
+       padding: 12px 18px;
+       background-color: #000000;
+       color: #ffffff;
+       border: none;
+       border-radius: 999px;
+       font-size: 14px;
+       cursor: pointer;
+       width: fit-content;
+   }
+
+   .btn:hover {
+       opacity: 0.9;
+   }
+
+   /* Progress dots */
+   .steps {
+       margin-top: 40px;
+       display: flex;
+       gap: 10px;
+       align-items: center;
+   }
+
+   .step {
+       height: 4px;
+       width: 40px;
+       border-radius: 999px;
+       background-color: #e5e5e5;
+   }
+
+   .step.active {
+       background-color: #111111;
+   }
+
+   /* ------------------------------
+         RESPONSIVE (Mobile)
+         ------------------------------ */
+   @media (max-width: 900px) {
+       .page {
+           grid-template-columns: 1fr;
+       }
+
+       .left {
+           padding: 48px;
+       }
+
+       .right {
+           padding: 48px;
+       }
+   }
