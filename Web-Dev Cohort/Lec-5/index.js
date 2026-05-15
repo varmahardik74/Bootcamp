@@ -79,3 +79,36 @@ function onError(err) {
 readFilePromisified("./Lec-5/ab.txt")
   .then(onDone)
   .catch(onError);
+
+
+// ---------------------------------------------------
+// Promisified Version of setTimeout using async/await
+// ---------------------------------------------------
+
+
+// Function that returns a Promise
+// The promise resolves after the given time delay
+function setTimeoutPromisified(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+// Async function to execute delays sequentially
+async function solve() {
+
+  // Wait for 1 second
+  await setTimeoutPromisified(1000);
+  console.log("hi");
+
+  // Wait for 3 seconds
+  await setTimeoutPromisified(3000);
+  console.log("hello");
+
+  // Wait for 5 seconds
+  await setTimeoutPromisified(5000);
+  console.log("hi there");
+}
+
+
+// Calling the async function
+solve();
