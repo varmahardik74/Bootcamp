@@ -26,7 +26,7 @@ console.log(ans);
 
 
 
-//A function to greet the uses and find if they are elugible to vote, where user is a parameter as a onject
+//A function to greet the uses and find if they are eligible to vote, where user is a parameter as a onject
 function greetUser(user) {
   // Variable to store title
   let title;
