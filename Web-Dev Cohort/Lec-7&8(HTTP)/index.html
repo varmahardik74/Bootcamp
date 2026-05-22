@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        async function add(){
+            const a = document.getElementById("first").value;
+            const b = document.getElementById("second").value;
+            
+            const res = await fetch( "http://localhost:3000/sum/" + a + "/" + b);
+            const json = await res.json()
+            document.getElementById("response").innerHTML = json.ans; 
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    //headers are key value pairs b/w clinet adn serves like it give data to the clinet in response and also Get some of it 
+    <input id="first" type="text" placeholder="first number" />
+    <input id="second" type="text" placeholder="second number" />
+
+    <button onclick="add()">Add</button>
+    <button>Sub</button>
+    <button>Mul</button>
+    <button>Div</button>
+<div id="response"></div>  <!-- ADD THIS LINE -->
+</body>
+</html>

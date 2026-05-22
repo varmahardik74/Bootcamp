@@ -6,7 +6,7 @@ function addTodo(){
  
     //read the contents inside the input box   && write code that reads the content of the input box
     //Write the todo to html
-            // step 1: create a new div element in js (as a varible)
+            // step 1: create a new div element in js (as a variable)
             // step 2: Append that div into parent div
     // clear the input
 
