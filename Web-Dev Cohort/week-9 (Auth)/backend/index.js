@@ -6,8 +6,8 @@ const { authMiddleware } = require("./middleware");
 const app = express();  /// This is to use the libraries/dependencies 
 app.use(express.json()); //This is a middleware function
 
-const notes = []; //Created two string both take input as array to store the data    
-const users = [{}]; //This is stroing data in variables 
+const notes = []; //Created two array both take input as string to store the data    
+const users = [{}]; //This is storing data in variables 
 
 
 
@@ -33,6 +33,8 @@ app.post("/signup", function(req, res) {
         message: "You have signed up"
     })})
 
+
+    //Signin Endpoint 
 app.post("/signin", function(req, res) {
     const username = req.body.username;
     const password = req.body.password;

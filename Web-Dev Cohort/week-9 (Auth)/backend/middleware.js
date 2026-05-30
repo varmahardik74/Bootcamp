@@ -7,20 +7,22 @@ function authMiddleware(req, res, next) {
     res.status(403).send({
       message: "You are not loggged in",
     });
-    return;}
-  const decoded = jwt.verify(token, "harkirat123");
+    return;
+  }
+  const decoded = jwt.verify(token, "/");
   const username = decoded.username;
 
   if (!username) {
     res.status(403).json({
       message: "malformed token",
     });
-    return;}
+    return;
+  }
 
   req.username = username;
   next();
 }
 
 module.exports = {
-  authMiddleware, 
+  authMiddleware,
 };
