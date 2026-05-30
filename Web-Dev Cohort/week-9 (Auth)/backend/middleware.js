@@ -1,29 +1,26 @@
+const jwt = require("jsonwebtoken");
 
 function authMiddleware(req, res, next) {
-    const token = req.headers.token;
+  const token = req.headers.token;
 
-    if (!token) {
-        res.status(403).send({
-            message: "You are not loggged in"
-        });
-        return;
-    }
+  if (!token) {
+    res.status(403).send({
+      message: "You are not loggged in",
+    });
+    return;}
+  const decoded = jwt.verify(token, "harkirat123");
+  const username = decoded.username;
 
-    const decoded = jwt.verify(token, "harkirat123");
-    const username = decoded.username;
-    
-    if (!username) {
-        res.status(403).json({
-            message: "malformed token"
-        })
-        return;
-    }
+  if (!username) {
+    res.status(403).json({
+      message: "malformed token",
+    });
+    return;}
 
-    req.username = username;
-
-    next();
+  req.username = username;
+  next();
 }
 
 module.exports = {
-    authMiddleware
-}
+  authMiddleware, 
+};

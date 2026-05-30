@@ -1,21 +1,22 @@
 
-const express = require("express");
+const express = require("express");  //// This is to import this dependencies 
 const jwt = require("jsonwebtoken");
 const { authMiddleware } = require("./middleware");
 
-const app = express();
-app.use(express.json());
+const app = express();  /// This is to use the libraries/dependencies 
+app.use(express.json()); //This is a middleware function
 
-const notes = []; 
-const users = [{
-    username: "harkirat",
-    password: "123123"
-}];
+const notes = []; //Created two string both take input as array to store the data    
+const users = [{}]; //This is stroing data in variables 
 
 
 
+//Signup route(more of a endpoint) that stores email and password 
+// POST = To send some data 
+
+// Syntax: app.post(path, callback [, callback ...])
 app.post("/signup", function(req, res) {
-    const username = req.body.username;  // harkirat
+    const username = req.body.username;  
     const password = req.body.password;
     const userExists = users.find(user => user.username === username);
     if (userExists) {
@@ -23,7 +24,6 @@ app.post("/signup", function(req, res) {
             message: "User with this username already exists"
         })
     }
-
     users.push({
         username: username, 
         password: password
@@ -31,8 +31,7 @@ app.post("/signup", function(req, res) {
 
     res.json({
         message: "You have signed up"
-    })
-})
+    })})
 
 app.post("/signin", function(req, res) {
     const username = req.body.username;
@@ -44,18 +43,16 @@ app.post("/signin", function(req, res) {
         res.status(403).json({
             message: "Incorrect credentials"
         })
-        return;
-    }
-    
+        return;}
+
     // json web tokens
     const token = jwt.sign({
         username: username
-    }, "harkirat123");
+    }, "/");
 
     res.json({
         token: token
-    })
-})
+    }) })
 
 
 // POST - Create a note -- AUTHENTICATED ENDPOINT
@@ -87,12 +84,16 @@ app.get("/", function(req, res) {
 app.get("/signup", function(req, res) {
   res.sendFile("/Bootcamp/Web-Dev Cohort/week-9 (Auth)/frontend/signup.html");
 })
-
 app.get("/signin", function(req, res) {
   res.sendFile("/Bootcamp/Web-Dev Cohort/week-9 (Auth)/frontend/signin.html");
 })
 
-//This route uses posrt 3000
+//This route uses port 3000
 app.listen(3000, () => {
   console.log("server is started");
 });
+
+
+
+
+  
