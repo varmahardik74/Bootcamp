@@ -1,4 +1,11 @@
+// Structure of a function in JS 
+function functionName(parameter1, parameter2) {
+  // Code to be executed
+  return result;
+}   
+
 // Basic function to add two numbers
+
 function sum(a, b) {
   return a + b;
 }
@@ -10,7 +17,7 @@ console.log(ans);
 
 
 // Sum of first 'n' numbers
-function sum(n) {
+function Findsum(n) {
 	let ans = 0;
 	for (let i = 1; i <= n; i++) {
 		ans = ans + i
@@ -18,30 +25,44 @@ function sum(n) {
 	return ans;
 }
 
-const ans = sum(12);
+const ans = Findsum(12);
 console.log(ans);
 
 
 
+function report(student){
+  console.log(student.name + " is " + student.age + " years old.");
+}
 
+const user1 = {
+  name: "hardik",
+  age: 22,
+}
+const user2 = {
+  name: "anvi",
+  age: 12,
+}
+
+report(user1);
+report(user2);
 
 
 //A function to greet the uses and find if they are eligible to vote, where user is a parameter as a object
-function greetUser(user) {
-  // Variable to store title
-  let title;
+  function greetUser(user) {
+    // Variable to store title
+    let title;
 
-  // Decide greeting based on gender
-  if (user.gender === "male") {
-    title = "Mr";
-  } else if (user.gender === "female") {
-    title = "Mrs";
-  } else {
-    title = "Others";
-  }
+    // Decide greeting based on gender
+    if (user.gender === "male") {
+      title = "Mr";
+    } else if (user.gender === "female") {
+      title = "Mrs";
+    } else {
+      title = "Others";
+    }
 
-  // Greet the user
-  console.log(`Hi ${title} ${user.name}, your age is ${user.age}`);
+    // Greet the user
+    console.log(`Hi ${title} ${user.name}, your age is ${user.age}`);
 
   // Check voting eligibility
   if (user.age >= 18) {

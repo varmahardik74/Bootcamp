@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
 
-mongoose.connect("");
+const mongoose = require("mongoose"); //imports the library called Mongoose into file.
+
+
 
 const UserSchema = new mongoose.Schema({
     username: String,
@@ -20,3 +21,12 @@ module.exports = {
     userModel: userModel,
     todoModel: todoModel
 }
+
+
+const OrganizationSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    userId: mongoose.Types.ObjectId,
+    members : Array
+})
+mongoose.connect("");

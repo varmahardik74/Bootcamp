@@ -2,36 +2,36 @@
 // // Promise-based setTimeout and fs.readFile Examples
 // // ---------------------------------------------------
 
-// const fs = require("fs");
+ const fs = require("fs");
 
 
 // // ===================================================
 // // 1. Promisified Version of setTimeout
 // // ===================================================
 
-// function setTimeoutPromisified(delay) {
-//   return new Promise(function (resolve) {
-//     setTimeout(function () {
-//       resolve();
-//     }, delay);
-//   });
-// }
+function setTimeoutPromisified(delay) {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      resolve();
+    }, delay);
+  });
+}
 
 
-// // Example 1
-// setTimeoutPromisified(1000).then(function () {
-//   console.log("1 second has passed");
-// });
+// Example 1
+setTimeoutPromisified(1000).then(function () {
+  console.log("1 second has passed");
+});
 
-// // Example 2
-// setTimeoutPromisified(2000).then(function () {
-//   console.log("2 seconds have passed");
-// });
+// Example 2
+setTimeoutPromisified(2000).then(function () {
+  console.log("2 seconds have passed");
+});
 
-// // Example 3
-// setTimeoutPromisified(3000).then(function () {
-//   console.log("3 seconds have passed");
-// });
+// Example 3
+setTimeoutPromisified(3000).then(function () {
+  console.log("3 seconds have passed");
+});
 
 
 // ===================================================

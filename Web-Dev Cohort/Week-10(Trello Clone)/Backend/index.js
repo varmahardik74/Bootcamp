@@ -2,6 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { authMiddleware } = require("./middleware")
 
+
+//In-memory database 
 let USERS_ID = 1;
 let ORGANIZATION_ID = 1;
 let BOARD_ID = 1;
@@ -18,7 +20,7 @@ const ISSUES = [];
 const app = express();
 app.use(express.json());
 
-// CREATE
+// CREATE (POST) endpoints 
 app.post("/signup", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -119,7 +121,9 @@ app.post("/issue", (req, res) => {
 
 })
 
-//GET endpoints
+
+
+//READ (GET) endpoints
 app.get("/organization", authMiddleware, (req, res) => {
     const userId = req.userId;
     const organizationId = parseInt(req.query.organizationId); // "1"
@@ -161,7 +165,7 @@ app.get("/members", (req, res) => {
 })
 
 
-// UPDATE
+// UPDATE (PUT) endpoint 
 app.put("/issues", (req, res) => {
 
 })

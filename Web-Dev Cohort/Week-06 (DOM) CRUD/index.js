@@ -1,4 +1,4 @@
-// alert("Heeloo bkllll");
+alert("Heeloo bkllll");
 
 let todoIndex = 1;
 
@@ -11,6 +11,7 @@ function addTodo(){
     // clear the input
 
  
+    // Reading form the input box 
     const element = document.getElementById("todoInput")
     const todo = element.value;
     element.value = "";

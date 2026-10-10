@@ -11,11 +11,11 @@ app.post("/signup", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const existingUser = await userModel.findOne({
+    const userExist = await userModel.findOne({
         username: username,
         password: password
     });
-    if (existingUser) {
+    if (userExist) {
         res.status(403).json({
             message: "User with this username already exists"
         })
@@ -36,18 +36,18 @@ app.post("/signin", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const userExists = await userModel.findOne({
+    const userExist = await userModel.findOne({
         username: username,
         password: password
     });
-    if (!userExists) {
+    if (!userExist) {
         res.status(403).json({
             message: "Incorrect credentials"
         })
     }
 
     const token = jwt.sign({
-        userId: userExists.id
+        userId: userExist.id
     }, "secret123123");
 
     res.json({
@@ -62,7 +62,7 @@ app.post("/todo", authMiddleware, (req, res) => {
     const description = req.body.description;
 
     TODOS.push({
-        id: CURRENT_TODO_ID++,
+        id: TODO_ID++,
         title: title,
         description: description,
         userId: userId
