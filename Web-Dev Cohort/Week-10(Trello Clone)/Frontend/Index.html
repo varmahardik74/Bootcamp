@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trello Clone</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f5f7;
+      color: #172b4d;
+    }
+
+    header {
+      height: 60px;
+      background: #2563eb;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    header h1 {
+      font-size: 22px;
+    }
+
+    .logout-btn {
+      border: none;
+      padding: 9px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: white;
+      color: #2563eb;
+    }
+
+    main {
+      padding: 30px;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .boards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .board-card {
+      min-height: 130px;
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      background: #1d4ed8;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    .board-card h3 {
+      margin-bottom: 12px;
+    }
+
+    .create-board {
+      background: white;
+      color: #2563eb;
+      border: 2px dashed #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Trello Clone</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h2>My Boards</h2>
+      <p>Create and manage your Trello boards.</p>
+    </section>
+
+    <section class="boards">
+      <div class="board-card">
+        <h3>Project Board</h3>
+        <p>Manage your project tasks</p>
+      </div>
+
+      <div class="board-card">
+        <h3>Daily Tasks</h3>
+        <p>Track your daily work</p>
+      </div>
+
+      <div class="board-card create-board" onclick="createBoard()">
+        + Create New Board
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "./signin.html";
+    }
+
+    function createBoard() {
+      const boardName = prompt("Enter board name:");
+
+      if (boardName) {
+        alert(`Board "${boardName}" created successfully!`);
+      }
+    }
+  </script>
+</body>
+</html>
