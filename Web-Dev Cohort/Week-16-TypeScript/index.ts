@@ -1,3 +1,9 @@
+import express from express;
+
+const app = express();
+app.listen(3000);
+
+
 function Greet(first_name: string) {
   return console.log(`Hello, ${first_name}`);
 }
