@@ -4,9 +4,8 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "attlasiationsupersecret123123password";
 
 function authMiddleware(req, res, next) {
-    // Check if the user has provided the token in headers (token or Authorization)
-    const authHeader = req.headers.authorization;
-    const token = req.headers.token || (authHeader ? authHeader.replace(/^Bearer\s+/i, "") : null);
+    // Check if the user has provided the token in headers
+    const token = req.headers.token;
 
     // If token is not received 
     if (!token) {

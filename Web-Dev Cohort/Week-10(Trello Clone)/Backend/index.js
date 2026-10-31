@@ -24,60 +24,6 @@ const ORGANIZATIONS = [];
 const BOARDS = [];
 const ISSUES = [];
 
-// Seed default in-memory data for testing and immediate availability
-const defaultUser = { id: USERS_ID++, username: "testuser", password: "password123" };
-USERS.push(defaultUser);
-
-const defaultOrg = {
-    id: ORGANIZATION_ID++,
-    title: "Engineering Workspace",
-    description: "Default workspace",
-    admin: defaultUser.id,
-    members: []
-};
-ORGANIZATIONS.push(defaultOrg);
-
-const defaultBoard1 = {
-    id: BOARD_ID++,
-    title: "Project Board",
-    organizationId: defaultOrg.id,
-    createdBy: defaultUser.id
-};
-const defaultBoard2 = {
-    id: BOARD_ID++,
-    title: "Daily Tasks",
-    organizationId: defaultOrg.id,
-    createdBy: defaultUser.id
-};
-BOARDS.push(defaultBoard1, defaultBoard2);
-
-ISSUES.push(
-    {
-        id: ISSUES_ID++,
-        title: "Setup Express Server",
-        description: "Configure routes and middleware",
-        boardId: defaultBoard1.id,
-        status: "done",
-        createdBy: defaultUser.id
-    },
-    {
-        id: ISSUES_ID++,
-        title: "Connect Frontend DOM Components",
-        description: "Render dynamic board cards and tasks from Backend",
-        boardId: defaultBoard1.id,
-        status: "in_progress",
-        createdBy: defaultUser.id
-    },
-    {
-        id: ISSUES_ID++,
-        title: "Review Daily Backlog",
-        description: "Prioritize upcoming feature requests",
-        boardId: defaultBoard2.id,
-        status: "todo",
-        createdBy: defaultUser.id
-    }
-);
-
 // CREATE (POST) endpoints 
 app.post("/signup", (req, res) => {
     const username = req.body.username;
@@ -115,8 +61,7 @@ app.post("/signin", (req, res) => {
 
     // FIX: Using standardized JWT_SECRET
     const token = jwt.sign({
-        userId: userExists.id
-    }, JWT_SECRET);
+        userId: userExists.id }, JWT_SECRET);
 
     res.json({
         token
@@ -174,41 +119,18 @@ app.post("/add-member-to-organization", authMiddleware, (req, res) => {
 // FIX: Implemented POST /board
 app.post("/board", authMiddleware, (req, res) => {
     const userId = req.userId;
-    let { title, organizationId } = req.body;
+    const { title, organizationId } = req.body;
 
-    if (!title || !title.trim()) {
-        return res.status(400).json({
-            message: "Board title is required"
+    const org = ORGANIZATIONS.find(o => o.id === organizationId);
+    if (!org || (org.admin !== userId && !org.members.includes(userId))) {
+        return res.status(403).json({
+            message: "Organization not found or you are not a member"
         });
-    }
-
-    let org;
-    if (organizationId) {
-        org = ORGANIZATIONS.find(o => o.id === Number(organizationId));
-        if (!org || (org.admin !== userId && !org.members.includes(userId))) {
-            return res.status(403).json({
-                message: "Organization not found or you are not a member"
-            });
-        }
-    } else {
-        // If organizationId not specified, find user's org or create default
-        org = ORGANIZATIONS.find(o => o.admin === userId || o.members.includes(userId));
-        if (!org) {
-            org = {
-                id: ORGANIZATION_ID++,
-                title: "Personal Workspace",
-                description: "Default workspace",
-                admin: userId,
-                members: []
-            };
-            ORGANIZATIONS.push(org);
-        }
-        organizationId = org.id;
     }
 
     const newBoard = {
         id: BOARD_ID++,
-        title: title.trim(),
+        title,
         organizationId,
         createdBy: userId
     };
@@ -225,13 +147,7 @@ app.post("/issue", authMiddleware, (req, res) => {
     const userId = req.userId;
     const { title, description, boardId, status } = req.body;
 
-    if (!title || !title.trim()) {
-        return res.status(400).json({
-            message: "Task title is required"
-        });
-    }
-
-    const board = BOARDS.find(b => b.id === Number(boardId));
+    const board = BOARDS.find(b => b.id === boardId);
     if (!board) {
         return res.status(404).json({
             message: "Board does not exist"
@@ -240,9 +156,9 @@ app.post("/issue", authMiddleware, (req, res) => {
 
     const newIssue = {
         id: ISSUES_ID++,
-        title: title.trim(),
-        description: description || "",
-        boardId: Number(boardId),
+        title,
+        description,
+        boardId,
         status: status || "todo", // Default status: 'todo'
         createdBy: userId
     };
@@ -284,7 +200,7 @@ app.get("/organization", authMiddleware, (req, res) => {
 // FIX: Implemented GET /boards
 app.get("/boards", authMiddleware, (req, res) => {
     const organizationId = parseInt(req.query.organizationId);
-    const orgBoards = organizationId
+    const orgBoards = organizationId 
         ? BOARDS.filter(b => b.organizationId === organizationId)
         : BOARDS;
 
@@ -296,7 +212,7 @@ app.get("/boards", authMiddleware, (req, res) => {
 // FIX: Implemented GET /issues
 app.get("/issues", authMiddleware, (req, res) => {
     const boardId = parseInt(req.query.boardId);
-    const boardIssues = boardId
+    const boardIssues = boardId 
         ? ISSUES.filter(i => i.boardId === boardId)
         : ISSUES;
 
@@ -330,7 +246,7 @@ app.get("/members", authMiddleware, (req, res) => {
 // FIX: Implemented PUT /issues (update issue status, title, description)
 app.put("/issues", authMiddleware, (req, res) => {
     const { issueId, title, description, status } = req.body;
-    const issue = ISSUES.find(i => i.id === Number(issueId));
+    const issue = ISSUES.find(i => i.id === issueId);
 
     if (!issue) {
         return res.status(404).json({
@@ -345,21 +261,6 @@ app.put("/issues", authMiddleware, (req, res) => {
     res.json({
         message: "Issue updated successfully",
         issue
-    });
-});
-
-// DELETE /issue (delete task)
-app.delete("/issue", authMiddleware, (req, res) => {
-    const issueId = Number(req.body.issueId || req.query.issueId);
-    const index = ISSUES.findIndex(i => i.id === issueId);
-    if (index === -1) {
-        return res.status(404).json({
-            message: "Issue not found"
-        });
-    }
-    ISSUES.splice(index, 1);
-    res.json({
-        message: "Issue deleted successfully"
     });
 });
 
@@ -393,5 +294,5 @@ app.delete("/members", authMiddleware, (req, res) => {
 });
 
 app.listen(3000, () => {
-    console.log("Server running on port 3000");
+    console.log("Week-10 Trello Clone server running on port 3000");
 });
