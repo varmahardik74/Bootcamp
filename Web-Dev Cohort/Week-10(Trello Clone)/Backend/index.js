@@ -1,5 +1,5 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");// validate if the user is already signup id yes it remembers the user via || used for authnetication and authorization how does it authnticate is check weather it is a valid uses a JWT(randomly generated sting is returend to the user and every time the user login this string is used to aunthticate  ) 
 const cors = require("cors");
 const path = require("path");
 // FIX: Imported JWT_SECRET from middleware to keep secret synchronized
@@ -10,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 // Serve frontend static files
+
 app.use(express.static(path.join(__dirname, "../Frontend")));
 
 // In-memory database 
@@ -60,8 +61,7 @@ app.post("/signin", (req, res) => {
 
     // FIX: Using standardized JWT_SECRET
     const token = jwt.sign({
-        userId: userExists.id
-    }, JWT_SECRET);
+        userId: userExists.id }, JWT_SECRET);
 
     res.json({
         token
