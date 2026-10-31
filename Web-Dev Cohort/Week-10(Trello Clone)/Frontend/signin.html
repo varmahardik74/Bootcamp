@@ -18,11 +18,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: white;
+      background: #f4f5f7;
     }
 
     .login-box {
-      width: 320px;
+      width: 340px;
       padding: 30px;
       border-radius: 12px;
       border: 1px solid #dcdcdc;
@@ -63,6 +63,7 @@
       font-size: 15px;
       cursor: pointer;
       transition: 0.3s;
+      font-weight: bold;
     }
 
     .login-btn:hover {
@@ -79,6 +80,16 @@
       color: #2563eb;
       text-decoration: none;
     }
+
+    .demo-hint {
+      margin-top: 15px;
+      padding: 10px;
+      background: #eff6ff;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #1e40af;
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -88,20 +99,55 @@
     <h2>Login</h2>
 
     <div class="input-box">
-      <input type="text" placeholder="Username">
+      <input type="text" id="username" placeholder="Username" value="testuser">
     </div>
 
     <div class="input-box">
-      <input type="password" placeholder="Password">
+      <input type="password" id="password" placeholder="Password" value="password123">
     </div>
 
-    <button class="login-btn">Login</button>
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <div class="demo-hint">
+      <strong>Demo Credentials:</strong><br>
+      User: <code>testuser</code> | Pass: <code>password123</code>
+    </div>
 
     <div class="bottom-text">
       Don’t have an account?
       <a href="./signup.html">Sign Up</a>
     </div>
   </div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!username || !password) {
+        alert("Please enter username and password");
+        return;
+      }
+
+      try {
+        const res = await fetch("/signin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("username", username);
+          window.location.href = "./index.html";
+        } else {
+          alert(data.message || "Login failed");
+        }
+      } catch (err) {
+        alert("Server error: " + err.message);
+      }
+    }
+  </script>
 
 </body>
 </html>

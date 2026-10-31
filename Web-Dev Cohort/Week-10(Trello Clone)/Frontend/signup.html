@@ -1,117 +1,135 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Signup</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup</title>
 
-        <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f4f5f7;
+    }
+
+    .signup-box {
+      width: 340px;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid #dcdcdc;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      text-align: center;
+    }
+
+    .signup-box h2 {
+      margin-bottom: 25px;
+      color: #111;
+    }
+
+    .input-box {
+      margin-bottom: 18px;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-box input:focus {
+      border-color: #2563eb;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    .signup-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .bottom-text {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .bottom-text a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="signup-box">
+    <h2>Sign Up</h2>
+
+    <div class="input-box">
+      <input id="username" type="text" placeholder="Username" />
+    </div>
+
+    <div class="input-box">
+      <input id="password" type="password" placeholder="Password" />
+    </div>
+
+    <button class="signup-btn" onclick="signup()">Create Account</button>
+
+    <div class="bottom-text">
+      Already have an account?
+      <a href="./signin.html">Login</a>
+    </div>
+  </div>
+
+  <script>
+    async function signup() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!username || !password) {
+        alert("Please enter a username and password");
+        return;
       }
 
-      body {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: white;
+      try {
+        const response = await fetch("/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert("Account created successfully! Please sign in.");
+          window.location.href = "./signin.html";
+        } else {
+          alert(data.message || "Signup failed");
+        }
+      } catch (err) {
+        alert("Server error: " + err.message);
       }
-
-      .signup-box {
-        width: 320px;
-        padding: 30px;
-        border-radius: 12px;
-        border: 1px solid #dcdcdc;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        background: #fff;
-        text-align: center;
-      }
-
-      .signup-box h2 {
-        margin-bottom: 25px;
-        color: #111;
-      }
-
-      .input-box {
-        margin-bottom: 18px;
-      }
-
-      .input-box input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #bbb;
-        border-radius: 8px;
-        outline: none;
-        font-size: 14px;
-      }
-
-      .input-box input:focus {
-        border-color: #2563eb;
-      }
-
-      .signup-btn {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        background: #2563eb;
-        color: white;
-        font-size: 15px;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .signup-btn:hover {
-        background: #1d4ed8;
-      }
-
-      .bottom-text {
-        margin-top: 15px;
-        font-size: 13px;
-        color: #444;
-      }
-
-      .bottom-text a {
-        color: #2563eb;
-        text-decoration: none;
-      }
-    </style>
-    <script>
-      async function signup() {
-                const username = document.getElementById("username").value
-                const password = document.getElementById("password").value
-                const response = await axios.post("http://localhost:3000/signup", {
-                    username, password
-                })
-
-                window.location = '/signin'
-                
-            }
-    </script>
-    </head>
-
-    <body>
-        <div class="signup-box">
-            <h2>Sign Up</h2>
-
-            <div class="input-box">
-                <input id="username" type="text" placeholder="Username" />
-            </div>
-
-            <div class="input-box">
-                <input id="password" type="password" placeholder="Password" />
-            </div>
-
-            <button class="signup-btn" onclick="">Create Account</button>
-
-            <div class="bottom-text">
-                Already have an account?
-                <a href="./signin.html">Login</a>
-            </div>
-        </div>
-    </body>
+    }
+  </script>
+</body>
 </html>
